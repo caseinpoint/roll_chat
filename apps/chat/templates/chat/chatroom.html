@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title>Chat+Roll | {{game.title}}</title>
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'chat/css/bootstrap.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'chat/css/style.css' %}">
+		<script type="text/javascript">
+			window.game_id = {{game.id}};
+			window.user_id = {{user.id}};
+		</script>
+		<script src="{% static 'chat/js/jquery-3.3.1.min.js' %}" charset="utf-8"></script>
+		<script src="{% static 'chat/js/bootstrap.min.js' %}" charset="utf-8"></script>
+		<script src="{% static 'chat/js/chatroom.js' %}" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="container-fluid" id="chat_container">
+			<ul class="nav mt-3 mb-2 border-bottom" id="nav_bar">
+				<li class="nav-item mr-5">
+					<h2>{{game.title}}</h2>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/home">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/users/logout">Logout</a>
+				</li>
+				<li class="nav-item">
+					<!-- <div class="btn-group"> -->
+						<button class="btn btn-success" type="button" id="btn_roller"
+						data-toggle="modal" data-target="#dice_modal">Die Roller</button>
+					<!-- </div> -->
+				</li>
+				<li class="nav-item ml-1">
+					<button class="btn btn-info" type="button" id="btn_scr_dwn">Scroll To Bottom</button>
+				</li>
+			</ul>
+			<div class="col-12 h-75 mb-2 py-2 border rounded" id="chat_msg_box"></div>
+			<textarea class="form-control" id="chat_msg_input" rows="3" autofocus
+			placeholder="Press shift+enter to send.&emsp;Include &quot;/r [# dice]d[# sides]+[modifier]&quot; in your message to make a roll."></textarea>
+			<button class="btn btn-secondary btn-lg btn-block" type="button" id="chat_msg_btn">Send</button>
+		</div>
+		<div class="modal" id="dice_modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Roll a die:</h5>
+						<button type="button" class="close" data-dismiss="modal" id="btn_modal_close">&times;</button>
+					</div>
+					<div class="modal-body py-3">
+						<div class="row justify-content-center">
+							<div class="input-group col-5 mb-3">
+								<div class="input-group-prepend">
+									<div class="input-group-text">Modifier</div>
+								</div>
+								<input class="form-control" id="modifier" type="number" value="0" min="-100" max="100">
+							</div>
+							<div class="btn-group">
+								<button class="btn btn-outline-success die-btn" type="button" id="btn_d4" value="4">D4</button>
+								<button class="btn btn-outline-success die-btn" type="button" id="btn_d6" value="6">D6</button>
+								<button class="btn btn-outline-success die-btn" type="button" id="btn_d8" value="8">D8</button>
+								<button class="btn btn-outline-success die-btn" type="button" id="btn_d10" value="10">D10</button>
+								<button class="btn btn-outline-success die-btn" type="button" id="btn_d12" value="12">D12</button>
+								<button class="btn btn-outline-success die-btn" type="button" id="btn_d20" value="20">D20</button>
+								<button class="btn btn-outline-success die-btn" type="button" id="btn_d100" value="100">D100</button>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

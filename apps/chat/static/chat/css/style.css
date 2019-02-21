@@ -1,0 +1,16 @@
+img.profile_pic {
+	max-width: 100%;
+	height: auto;
+}
+
+#chat_container {
+	height: 95vh;
+}
+
+#chat_msg_box {
+	overflow-y: scroll;
+}
+
+.modal-danger {
+	background-color: #f8d7d
+}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title>Chat+Roll | Game Info</title>
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'chat/css/bootstrap.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'chat/css/style.css' %}">
+		<script src="{% static 'chat/js/jquery-3.3.1.min.js' %}" charset="utf-8"></script>
+		<script src="{% static 'chat/js/bootstrap.min.js' %}" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<ul class="nav mt-3 mb-2 border-bottom">
+				<li class="nav-item mr-5">
+					<h1>Game Info</h1>
+				</li>
+				<li class="nav-item ml-5">
+					<a class="nav-link" href="/home">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/users/logout">Logout</a>
+				</li>
+			</ul>
+			<div class="row p-2">
+				<div class="col-lg-6 col-md-9 col-12">
+					<h2>Title: {{game.title}}</h2>
+					{% if is_gm %}
+					<form action="/games/{{game.id}}/update" method="post">
+						{% csrf_token %}
+						<div class="input-group mb-3">
+							<input class="form-control" type="text" name="title" placeholder="Must be at least 2 characters long." required>
+							<div class="input-group-append">
+								<button class="btn btn-outline-success" type="submit">Change Game Title</button>
+							</div>
+						</div>
+					</form>
+					{% endif %}
+					<h3>GM: <a href="/users/{{game.gm.id}}">{{game.gm.alias}}</a></h3>
+					{% if has_invite %}
+						<div class="btn-group">
+							<a class="btn btn-outline-success" href="/games/{{game.id}}/accept">Accept Invitation</a>
+							<a class="btn btn-outline-danger" href="/games/{{game.id}}/refuse">Decline Invitation</a>
+						</div>
+					{% elif is_player or is_gm %}
+						<a class="btn btn-outline-info" href="/games/{{game.id}}/chat">Launch Game</a>
+					{% endif %}
+					<h3 class="mt-3">Players:</h3>
+					<table class="table">
+						<tbody>
+							{% for player in game.players.all %}
+								<tr>
+									<td><a href="/users/{{player.id}}">{{player.alias}}</a></td>
+									{% if is_gm %}
+										<td><a class="btn btn-outline-danger" href="/games/{{game.id}}/remove/{{player.id}}">Remove</a></td>
+									{% endif %}
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					<h3 class="mt-3">Invited:</h3>
+					<table class="table">
+						<tbody>
+							{% for player in game.invitations.all %}
+								<tr>
+									<td><a href="/users/{{player.id}}">{{player.alias}}</a></td>
+									{% if is_gm %}
+										<td><a class="btn btn-outline-danger" href="/games/{{game.id}}/uninvite/{{player.id}}">Uninvite</a></td>
+									{% endif %}
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					{% if other_friends %}
+						<form action="/games/{{game.id}}/invite" method="post">
+							{% csrf_token %}
+							<input type="hidden" name="game_id" value="{{game.id}}">
+							<div class="form-group">
+								<label><strong>Invite More Friends (ctrl+click for mutliple):</strong></label>
+								<select multiple class="form-control" name="invitations" required>
+									{% for friend in other_friends %}
+										<option value="{{friend.id}}">{{friend.alias}}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<button class="btn btn-outline-secondary" type="submit">Invite</button>
+						</form>
+					{% endif %}
+				</div>
+			</div>
+			{% if is_gm %}
+				<hr>
+				<!-- <a class="btn btn-outline-danger" href="/games/{{game.id}}/delete">Delete Game</a> -->
+				<button class="btn btn-outline-danger" type="button" id="btn_delete"
+				data-toggle="modal" data-target=".modal">Delete Game</button>
+				<p class="my-1 text-danger">Warning: this will delete all game data and messages!</p>
+				<div class="modal">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content modal-danger">
+							<div class="modal-header justify-content-center">
+								<h3>Warning!</h3>
+							</div>
+							<div class="modal-body justify-content-center">
+								<h5 class="text-center">This will delete all game data and messages.</h5>
+								<h5 class="text-center">Are you sure you want to delete the game?</h5>
+							</div>
+							<div class="modal-footer justify-content-center">
+								<button class="btn btn-primary" type="button" data-dismiss="modal">Cancel</button>
+								<a class="btn btn-danger" href="/games/{{game.id}}/delete">Delete Game</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</body>
+</html>

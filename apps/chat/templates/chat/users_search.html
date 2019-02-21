@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title>Chat+Roll | Search</title>
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'chat/css/bootstrap.css' %}">
+	</head>
+	<body>
+		<div class="container-fluid">
+			<ul class="nav my-3 border-bottom">
+				<li class="nav-item mr-5">
+					<h1>Search Results</h1>
+				</li>
+				<li class="nav-item ml-5">
+					<a class="nav-link" href="/home">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/users/logout">Logout</a>
+				</li>
+			</ul>
+			<div class="row">
+				<div class="col-lg-6 col-md-9 col-12">
+					<form action="/users/search" method="post">
+						{% csrf_token %}
+						<div class="input-group mb-2">
+							<input class="form-control" type="text" name="query" placeholder="Email or Alias" required>
+							<div class="input-group-append">
+								<button class="btn btn-outline-secondary" type="submit">Search Again</button>
+							</div>
+						</div>
+					</form>
+					{% if none_found %}
+						<h4>No matches found. Please try again.</h4>
+					{% else %}
+						<ul class="list-group list-group-flush">
+							{% for res in results %}
+								<li class="list-group-item">
+									<a href="/users/{{res.id}}">{{res.alias}}</a>
+								</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

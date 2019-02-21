@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title>Chat+Roll | Home</title>
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'chat/css/bootstrap.css' %}">
+	</head>
+	<body>
+		<div class="container-fluid">
+			<ul class="nav mt-3 mb-2 border-bottom">
+				<li class="nav-item mr-5">
+					<h1>Welcome, {{user.alias}}</h1>
+				</li>
+				<li class="nav-item ml-5">
+					<a class="nav-link" href="/users/logout">Logout</a>
+				</li>
+			</ul>
+			<div class="row px-2">
+				<div class="col-lg-4 col-md-6 col-12 mb-2 p-2 border rounded pre-scrollable">
+					<h2>Friends</h2>
+					<form action="/users/search" method="post">
+						{% csrf_token %}
+						<div class="input-group mb-2">
+							<input class="form-control" type="text" name="query" placeholder="Email or Alias" required>
+							<div class="input-group-append">
+								<button class="btn btn-outline-primary" type="submit">Search for Friends</button>
+							</div>
+						</div>
+					</form>
+					<a class="btn btn-outline-secondary mb-1" href="/users/{{user.id}}">View Your Profile and Friends List</a>
+					{% if requests %}
+						<h4>Friend Requests:</h4>
+						<table class="table table-borderless">
+							<tbody>
+								{% for req in requests %}
+									<tr>
+										<td>
+											<a href="/users/{{req.requester.id}}">{{req.requester.alias}}</a>
+										</td>
+										<td><div class="btn-group btn-group-sm">
+											<a class="btn btn-outline-warning" href="/users/{{req.requester.id}}/accept">Accept</a>
+											<a class="btn btn-outline-danger" href="/users/{{req.requester.id}}/refuse">Decline</a>
+										</div></td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					{% endif %}
+				</div>
+				<div class="col-lg-4 col-md-6 col-12 mb-2 p-2 border rounded pre-scrollable">
+					<h2>Player Games</h2>
+					<!-- <h4>Current Games:</h4> -->
+					<table class="table">
+						<tbody>
+							{% for game in user.pc_games.all %}
+								<tr>
+									<td><a href="/games/{{game.id}}">{{game.title}}</a></td>
+									<td><a class="btn btn-outline-info" href="/games/{{game.id}}/chat">Launch</a></td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					{% if invitations %}
+					<h4>Invites:</h4>
+					<table class="table table-sm table-borderless">
+						<thead>
+							<tr>
+								<th>Game Title:</th>
+								<th>GM:</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for game in invitations %}
+							<tr>
+								<td><a href="/games/{{game.id}}">{{game.title}}</a></td>
+								<td><a href="/users/{{game.gm.id}}">{{game.gm.alias}}</a></td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					{% endif %}
+				</div>
+				<div class="col-lg-4 col-md-6 col-12 mb-2 p-2 border rounded pre-scrollable">
+					<h2>GM Games</h2>
+					<table class="table">
+						<tbody>
+							{% for game in user.gm_games.all %}
+								<tr>
+									<td><a href="/games/{{game.id}}">{{game.title}}</a></td>
+									<td><a class="btn btn-outline-info" href="/games/{{game.id}}/chat">Launch</a></td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					<a class="btn btn-outline-success" href="/games/new">Start a New Game</a>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

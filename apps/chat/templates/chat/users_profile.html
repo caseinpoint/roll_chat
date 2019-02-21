@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<title>Chat+Roll | {{ other_user.alias }}</title>
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'chat/css/bootstrap.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'chat/css/style.css' %}">
+	</head>
+	<body>
+		<div class="container-fluid">
+			<ul class="nav mt-3 mb-2 border-bottom">
+				<li class="nav-item mr-5">
+					<h1>{{other_user.alias}}'s Profile</h1>
+				</li>
+				<li class="nav-item ml-5">
+					<a class="nav-link" href="/home">Home</a>
+				</li>
+				{% if other_user.id == user.id %}
+					<li class="nav-item">
+						<a class="nav-link" href="/users/edit">Edit Your Profile</a>
+					</li>
+				{% endif %}
+				<li class="nav-item">
+					<a class="nav-link" href="/users/logout">Logout</a>
+				</li>
+			</ul>
+			{% if has_request %}
+				<div class="btn-group mb-2">
+					<a class="btn btn-warning" href="/users/{{other_user.id}}/accept">Accept {{other_user.alias}}'s Friend Request</a>
+					<a class="btn btn-danger" href="/users/{{other_user.id}}/refuse">Decline {{other_user.alias}}'s Request</a>
+				</div>
+			{% endif %}
+			<div class="row px-2">
+				<div class="col-3">
+					<img class="profile_pic" src="{{other_user.pic_url}}" alt="no profile picture">
+				</div>
+				<div class="col-9">
+					<h2>{{other_user.alias}}'s Friends:</h2>
+					{% if send_request %}
+						<a class="btn btn-outline-primary mb-2" href="/users/{{other_user.id}}/request">Send {{other_user.alias}} a Friend Request</a>
+					{% endif %}
+					{% if requests %}
+						<h4>Friend Requests:</h4>
+						<table class="table table-borderless">
+							<tbody>
+								{% for req in requests %}
+									<tr>
+										<td>
+											<a href="/users/{{req.requester.id}}">{{req.requester.alias}}</a>
+										</td>
+										<td><div class="btn-group btn-group-sm">
+											<a class="btn btn-outline-warning" href="/users/{{req.requester.id}}/accept">Accept</a>
+											<a class="btn btn-outline-danger" href="/users/{{req.requester.id}}/refuse">Delete</a>
+										</div></td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					{% endif %}
+					<ul class="list-group list-group-flush">
+						{% for friend in other_user.friends.all %}
+							<li class="list-group-item">
+								<a href="/users/{{friend.id}}">{{friend.alias}}</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
