@@ -218,7 +218,7 @@ def games_remove(request, game_id, user_id):
 	user = User.objects.get(id=request.session['u_id'])
 	other_user = User.objects.get(id=user_id)
 	game = Game.objects.get(id=game_id)
-	if game.gm.id != user.id:
+	if game.gm.id != user.id and user.id != other_user.id:
 		return redirect(f'/games/{game_id}')
 	game.players.remove(other_user)
 	return redirect(f'/games/{game_id}')
