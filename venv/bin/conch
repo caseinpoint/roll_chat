@@ -1,4 +1,4 @@
-#!/home/ubuntu/roll_chat/venv/bin/python3
+#!/home/drue/Code/Projects/roll_chat/venv/bin/python3
 # EASY-INSTALL-ENTRY-SCRIPT: 'Twisted==18.9.0','console_scripts','conch'
 __requires__ = 'Twisted==18.9.0'
 import re

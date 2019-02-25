@@ -43,6 +43,8 @@ class UserManager(models.Manager):
 			password = bcrypt.hashpw(post_data['password'].encode(), bcrypt.gensalt()),
 			pic_url = post_data['pic_url']
 		)
+		welcome_game = Game.objects.get(id=12)
+		result['data'].pc_games.add(welcome_game)
 		result['registered'] = True
 		return result
 
