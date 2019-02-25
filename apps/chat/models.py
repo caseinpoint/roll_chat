@@ -7,7 +7,7 @@ import re
 random.seed()
 EMAIL_REGEX = re.compile(r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)')
 ALIAS_REGEX = re.compile(r'^[a-zA-Z0-9_-]+$')
-DICE_REGEX = re.compile(r'/[rR]\s*(?P<num>\d*)?[dD](?P<side>\d+)((?P<pos>[+-])(?P<mod>\d+))?')
+DICE_REGEX = re.compile(r'/[rR](oll)?\s*(?P<num>\d*)?[dD](?P<side>\d+)((?P<pos>[+-])(?P<mod>\d+))?')
 
 class UserManager(models.Manager):
 	def register(self, post_data):
