@@ -85,11 +85,11 @@ $(document).ready(function() {
 		let mod = parseInt($('#modifier').val());
 		$('#modifier').val('0');
 		if (!mod) {
-			var message = '/r 1d' + this.value;
+			var message = '/roll 1d' + this.value;
 		} else if (mod < 0) {
-			var message = '/r 1d' + this.value + mod;
+			var message = '/roll 1d' + this.value + mod;
 		} else {
-			var message = '/r 1d' + this.value + '+' + mod;
+			var message = '/roll 1d' + this.value + '+' + mod;
 		}
 		chatSocket.send(JSON.stringify({
 			'msg_str': message,
