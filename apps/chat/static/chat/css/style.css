@@ -4,7 +4,7 @@ img.profile_pic {
 }
 
 #chat_container {
-	height: 95vh;
+	min-height: 100vh;
 }
 
 #chat_msg_box {

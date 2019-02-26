@@ -10,7 +10,7 @@
 		<div class="container-fluid">
 			<div class="jumbotron mt-3">
 				<h1 class="display-4 text-center">Welcome to Chat+Roll</h1>
-				<p class="lead text-center">A simple chat room site with built-in dice rolling functionality for tabletop RPG enthusiats.</p>
+				<p class="lead text-center">A simple chat room site with built-in dice rolling functionality for tabletop RPG enthusiasts.</p>
 				<p class="text-center">Please log in or register to continue.</p>
 			</div>
 			{% if messages %}
@@ -21,7 +21,7 @@
 			</ul>
 			{% endif %}
 			<div class="row px-2">
-				<div class="col-md-6 col-sm-12 px-2 border-right">
+				<div class="col-md-6 col-sm-12 px-2 mb-3 border-right">
 					<h1>Log In</h1>
 					<form action="/users/login" method="post">
 						{% csrf_token %}
