@@ -4,7 +4,7 @@ sudo docker run -p 6379:6379 -d redis:2.8
 __Ideas/Features__
 In order of occurrence:
 1 - Feature: write game messages to txt file for download
-2 - Idea: delete old messages regularly to save DB space
+2 - Idea: delete old messages regularly to save DB space (every 2 months?). Exclude messages from System
 3 - Deleting games:
 	a - just delete all of it
 	b - offer to transfer GM control to a player
@@ -22,3 +22,6 @@ In order of occurrence:
 
 10 - Feature: some kind of pagination for older messages in a game
 11 - Feature: add way for players to leave game
+12 - Feature: add "session end" button that puts in an <hr>
+13 - Feature: add direct messaging
+14 - Feature: add has_roll and has_error fields to Message for front-end formatting
