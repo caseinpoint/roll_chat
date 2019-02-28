@@ -4,12 +4,12 @@ sudo docker run -p 6379:6379 -d redis:2.8
 __Ideas/Features__
 In order of occurrence:
 1 - Feature: write game messages to txt file for download
-2 - Idea: delete old messages regularly to save DB space (every 2 months?). Exclude messages from System
+2 - DONE - Idea: delete old messages regularly to save DB space (every 2 months?). Exclude messages from System
 3 - Deleting games:
-	a - just delete all of it
+	a - DONE - just delete all of it
 	b - offer to transfer GM control to a player
 	c - offer to download txt file transcript first
-4 - Alias, profile pic and friends list is always public
+4 - DONE - Alias, profile pic and friends list is always public
 5 - Feature: display incoming friend requests (and maybe game invites) on user's own profile page
 6 - Display games in common with user on friend's profile page
 7 - Feature: display all games on user's own profile page
@@ -17,11 +17,11 @@ In order of occurrence:
 	a - or regex may be able to handle that (total them and then store in current number field)
 
 ***
-9 - Idea: get rid of Roll model, append new line to message with roll results instead. Will make displaying easier
+9 - DONE - Idea: get rid of Roll model, append new line to message with roll results instead. Will make displaying easier
 ***
 
 10 - Feature: some kind of pagination for older messages in a game
-11 - Feature: add way for players to leave game
+11 - DONE - Feature: add way for players to leave game
 12 - Feature: add "session end" button that puts in an <hr>
 13 - Feature: add direct messaging
 14 - Feature: add has_roll and has_error fields to Message for front-end formatting
