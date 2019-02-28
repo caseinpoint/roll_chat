@@ -256,4 +256,6 @@ def games_chat(request, game_id):
 		'user': user,
 		'game': game
 	}
+	if game.gm.id == user.id:
+		context['is_gm'] = True
 	return render(request, 'chat/chatroom.html', context)

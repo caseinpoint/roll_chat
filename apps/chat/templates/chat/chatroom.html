@@ -8,6 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'chat/css/style.css' %}">
 		<script type="text/javascript">
 			window.game_id = {{game.id}};
+			window.gm_id = {{game.gm.id}};
 			window.user_id = {{user.id}};
 		</script>
 		<script src="{% static 'chat/js/jquery-3.3.1.min.js' %}" charset="utf-8"></script>
@@ -16,10 +17,11 @@
 	</head>
 	<body>
 		<div class="container-fluid" id="chat_container">
-			<ul class="nav mt-3 mb-2 border-bottom" id="nav_bar">
-				<li class="nav-item mr-5">
-					<h2>{{game.title}}</h2>
-				</li>
+			<h2>{{game.title}}</h2>
+			<ul class="nav justify-content-end mb-2 border-bottom" id="nav_bar">
+				<!-- <li class="nav-item"> -->
+					<!-- <h2>{{game.title}}</h2> -->
+				<!-- </li> -->
 				<li class="nav-item">
 					<a class="nav-link" href="/home">Home</a>
 				</li>
@@ -32,13 +34,18 @@
 						data-toggle="modal" data-target="#dice_modal">Die Roller</button>
 					<!-- </div> -->
 				</li>
-				<li class="nav-item ml-1">
-					<button class="btn btn-info" type="button" id="btn_scr_dwn">Scroll To Bottom</button>
+				<li class="nav-item mb-1 ml-2">
+					<button class="btn btn-info" type="button" id="btn_scr_dwn">Scroll Down</button>
 				</li>
+				{% if is_gm %}
+					<li class="nav-item ml-2">
+						<button class="btn btn-dark" type="button" id="btn_end_session">End Session</button>
+					</li>
+				{% endif %}
 			</ul>
-			<div class="col-12 h-75 mb-2 py-2 border rounded" id="chat_msg_box"></div>
+			<div class="col-12 mb-2 py-2 border rounded" id="chat_msg_box"></div>
 			<textarea class="form-control" id="chat_msg_input" rows="3" autofocus
-			placeholder="Press shift+enter to send.&emsp;Include &quot;/r [# dice]d[# sides]+[modifier]&quot; in your message to make a roll."></textarea>
+			placeholder="Press shift+enter to send.&emsp;Include &quot;/roll [# dice]d[# sides]+[modifier]&quot; (just &quot;/r&quot; works as well) in your message to make a roll."></textarea>
 			<button class="btn btn-secondary btn-lg btn-block" type="button" id="chat_msg_btn">Send</button>
 		</div>
 		<div class="modal" id="dice_modal">

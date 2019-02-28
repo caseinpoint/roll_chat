@@ -3,11 +3,16 @@ img.profile_pic {
 	height: auto;
 }
 
-#chat_container {
-	min-height: 100vh;
-}
+/* #chat_container {
+	height: 100vh;
+} */
+
+/* #nav_bar {
+	max-height: 10vh;
+} */
 
 #chat_msg_box {
+	height: 70vh;
 	overflow-y: scroll;
 }
 
